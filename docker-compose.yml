@@ -1,0 +1,55 @@
+version: '1.0.0'
+
+services:
+  frontend:
+    image: 'todoapp-reactjs:latest'
+    build:
+      context: ./frontend
+    # networks:
+    #   - todo-app
+    ports:
+      - 3000:5173
+
+  backend:
+    image: 'todoapp-springboot:latest'
+    build:
+      context: ./backend
+    container_name: backend
+    depends_on:
+      db:
+        condition: service_healthy
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+#      - SPRING_DATASOURCE_USERNAME=compose-postgres
+#      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    environment:
+      GET_HOST_FROM: dns
+    hostname: todoapp-springboot
+    ports:
+      - 8080:8080
+    networks:
+      - todo-app
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      GET_HOST_FROM: dns
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: todo_db
+    hostname: todo_db
+    ports:
+      - 5433:5432
+    networks:
+      - todo-app
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U postgres -d todo_db'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+networks:
+  todo-app:
+    driver: bridge
