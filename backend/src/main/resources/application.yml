@@ -2,7 +2,7 @@ spring:
   application:
     name: backend
   datasource:
-    url: jdbc:postgresql://todo_db:5433/todo-list
+    url: jdbc:postgresql://localhost:5433/todo-list
     username: postgres
     password: secret
     driver-class-name: org.postgresql.Driver

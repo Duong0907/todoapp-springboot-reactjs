@@ -131,7 +131,7 @@ const LoginForm = (props) => {
                             state.active === "register" ? "show active" : ""
                         )}
                     >
-                        <form action="">
+                        <form action="" onSubmit={onSubmitRegister}>
                             <div className="form-outline mb-4">
                                 <label
                                     className="form-label"
@@ -143,6 +143,7 @@ const LoginForm = (props) => {
                                         id="firstname"
                                         name="firstname"
                                         className="form-control"
+                                        onChange={onChangeHandler}
                                     />
                                 </label>
                             </div>
@@ -159,21 +160,23 @@ const LoginForm = (props) => {
                                     id="lastname"
                                     name="lastname"
                                     className="form-control"
+                                    onChange={onChangeHandler}
                                 />
                             </div>
 
                             <div className="form-outline mb-4">
                                 <label
                                     className="form-label"
-                                    htmlFor="registerName"
+                                    htmlFor="registerEmail"
                                 >
-                                    Username
+                                    Email
                                 </label>
                                 <input
                                     type="text"
-                                    id="registerName"
-                                    name="registerName"
+                                    id="registerEmail"
+                                    name="email"
                                     className="form-control"
+                                    onChange={onChangeHandler}
                                 />
                             </div>
 
@@ -187,8 +190,9 @@ const LoginForm = (props) => {
                                 <input
                                     type="password"
                                     id="registerPassword"
-                                    name="registerPassword"
+                                    name="password"
                                     className="form-control"
+                                    onChange={onChangeHandler}
                                 />
                             </div>
 
@@ -196,7 +200,7 @@ const LoginForm = (props) => {
                                 type="submit"
                                 className="btn btn-primary btn-block mb-4"
                             >
-                                Signin
+                                Register
                             </button>
                         </form>
                     </div>

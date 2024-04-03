@@ -1,19 +1,10 @@
 version: '1.0.0'
 
 services:
-  frontend:
-    image: 'todoapp-reactjs:latest'
-    build:
-      context: ./frontend
-    # networks:
-    #   - todo-appa
-    ports:
-      - 3000:5173
-
   backend:
     image: 'todoapp-springboot:latest'
     build:
-      context: ./backend
+      context: .
     container_name: backend
     depends_on:
       db:
@@ -29,7 +20,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      - todo-app
+      - todo-app-api
 
   db:
     image: 'postgres:13.1-alpine'
@@ -43,7 +34,7 @@ services:
     ports:
       - 5433:5432
     networks:
-      - todo-app
+      - todo-app-api
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U postgres -d todo_db'" ]
       interval: 10s
@@ -51,5 +42,5 @@ services:
       retries: 3
 
 networks:
-  todo-app:
+  todo-app-api:
     driver: bridge
